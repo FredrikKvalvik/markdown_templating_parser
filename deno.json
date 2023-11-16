@@ -1,0 +1,6 @@
+{
+  "tasks": {
+    "run": "deno run -A src/transpiler/main.ts",
+    "dev": "deno run -A  --inspect src/transpiler/main.ts"
+  }
+}
