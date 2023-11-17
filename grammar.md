@@ -5,19 +5,22 @@ Markdown grammar
 ```
 DOCUMENT    -> (BLOCK | statement)*
 BLOCK       -> HEADER | PARAGRAPH | LIST
-statement   -> if_block | for_block | decl_block
+statement   -> if_block | for_block | declaration
 HEADER      -> ('#' | '##' | '###' | '####' | '#####' | '######' | "######") TEXT? EOL
 
-LIST        -> LIST_ITEM+
-LIST_ITEM   -> "-" TEXT EOL
+LIST_UL     -> LIST_ITEM_UL+
+LIST_ITEM_UL-> "-" PARAGRAPH
 
-PARAGRAPH   -> TEXT EOL
+LIST_OL     -> LIST_ITEM+
+LIST_ITEM_OL-> DIGIT+"." PARAGRAPH
+
+PARAGRAPH   -> (TEXT | expression_inline)* EOL
 ITALIC      -> "*" TEXT "*"
 BOLD        -> "**" TEXT "**"
 IMAGE       -> "!" LINK
-LINK        -> "[" ALNUM | expr_block "]" "(" ALNUM | expr_block ")"
+LINK        -> "[" ALNUM | expr_inline "]" "(" ALNUM | expr_inline ")"
 
-TEXT        -> ( alpha | NUMBER | digit | ITALIC | BOLD | expr_block )+
+TEXT        -> ( alpha | NUMBER | digit | ITALIC | BOLD )+
 
 // primitives
 ALNUM       -> ( alpha | digit )*
@@ -31,15 +34,15 @@ EOL         -> "\n"
 
 templating grammar
 ```
-IDENTIFIER  -> "$"alpha( alpha | digit )* "=" (alpha
-                                             | NUMBER
-                                             | bool
-                                             | LIST ) EOL
+IDENTIFIER  -> "$"alpha( alpha | digit )*
 
 // filters are built in methods for working on input
 filter      -> "|" alnum
 
-decl_block  -> "%decl" identifier* "%enddecl" EOL
+declaration -> IDENTIFIER "=" (alpha
+                              | NUMBER
+                              | bool
+                              | LIST_UL ) EOL
 if_block    -> "%if" expr EOL BLOCK* (%else EOL BLOCK*)? "%endif" EOL
 for_block   -> "%for" identifier "in" LIST EOL BLOCK* "%endfor" EOL
 
@@ -52,5 +55,5 @@ equality    -> comparison (("is" | "is not") comparison)*
 comparison  -> term ( ( ">" | "<" | ">=" | "<=" ) term )*
 term        -> factor ( ( "-" | "+" ) factor )* 
 unary       -> primary | ( "not" | "-" ) call
-primary     -> bool | NUMBER | ALNUM | LIST
+primary     -> bool | NUMBER | ALNUM | LIST | TEXT
 ```

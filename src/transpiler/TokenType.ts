@@ -7,12 +7,18 @@ export enum TokenType {
   PERCENT,
 
   // One, two or three character tokens.
-  LEFT_BRACE_2,
-  RIGHT_BRACE_2,
+  LEFT_CURLY_BRACE_2,
+  RIGHT_CURLY_BRACE_2,
+  LEFT_BRACE,
+  RIGHT_BRACE,
+  LEFT_PAREN,
+  RIGHT_PAREN,
+  HEADING,
+  UL,
+  OL,
 
   STAR,
   STAR_STAR,
-  POUND,
   BANG_EQUAL,
   EQUAL,
   EQUAL_EQUAL,
@@ -24,6 +30,7 @@ export enum TokenType {
   // Literals.
   IDENTIFIER,
   ALNUM,
+  STRING,
   NUMBER,
 
   // Keywords.
@@ -34,17 +41,19 @@ export enum TokenType {
   FALSE,
   FOR,
   IF,
+  IN,
   TRUE,
 }
 
 export enum BlockType {
   // blocks.
-  HEADING, PARAGRAPH, LIST, 
+  HEADING, PARAGRAPH, 
+  LIST_ITEM_UL, LIST_ITEM_OL,
 
   // statements.
-  IF_BLOCK, IF_BLOCK_END,
+  IF_BLOCK, IF_BLOCK_END, ELSE_BLOCK,
   FOR_BLOCK, FOR_BLOCK_END,
-  DECL_BLOCK, DECL_BLOCK_END,
+  DECLARATION,
 
   EOF
 }

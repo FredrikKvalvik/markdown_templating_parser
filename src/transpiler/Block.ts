@@ -2,17 +2,16 @@ import Token from "./Token.ts";
 import { BlockType } from "./TokenType.ts";
 
 class Block {
-  public children: Token[] = []
+  public tokens: Token[] = []
 
   constructor(
     public type: BlockType,
     public content: string,
-    public startLine: number,
-    public endLine: number,
+    public line: number,
   ) { }
 
   toString(): string {
-    return `${this.getEnumName()} ${this.content}`;
+    return `${this.getEnumName()}: ${this.content}`;
   }
 
   private getEnumName() {
@@ -20,7 +19,7 @@ class Block {
   }
 
   public addToken(token: Token) {
-    this.children.push(token)
+    this.tokens.push(token)
   }
 }
 
