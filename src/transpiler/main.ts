@@ -1,5 +1,5 @@
 import InlineLexer from "./InlineLexer.ts";
-import Lexer from "./Lexer.ts";
+import Lexer from "./BlockLexer.ts";
 
 const md = `## hello from decl!
 

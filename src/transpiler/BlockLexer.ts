@@ -3,7 +3,7 @@ import Token from "./Token.ts";
 import { BlockType, TokenType } from "./TokenType.ts";
 
 
-class Lexer {
+class BlockLexer {
   private blocks: Block[] = [];
 
   private start = 0;
@@ -20,12 +20,11 @@ class Lexer {
       this.whitespace()
 
       this.start = this.current
-      this.startLine = this.currentLine
 
       this.scanBlock()
     }
 
-    this.blocks.push(new Block(BlockType.EOF, "", this.startLine, this.currentLine))
+    this.blocks.push(new Block(BlockType.EOF, "", this.line))
 
     return this.blocks
   }
@@ -65,7 +64,7 @@ class Lexer {
     this.addBlock(BlockType.HEADING)
 
     this.advance()
-    this.currentLine++
+    this.line++
   }
 
   private blockListUl() {
@@ -175,7 +174,7 @@ class Lexer {
   /** advance through whitespace (" " and "\n") */
   private whitespace() {
     while ([" ", "\n"].includes(this.peek())) {
-      if (this.advance() === "\n") this.currentLine++
+      if (this.advance() === "\n") this.line++
     }
   }
 
@@ -207,4 +206,4 @@ class Lexer {
   }
 }
 
-export default Lexer
+export default BlockLexer
